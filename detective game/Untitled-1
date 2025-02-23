@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=960, height=540, initial-scale=1.0">
+    <title>AI Detective: The Case of the Missing Truth</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Detective: The Case of the Missing Truth</h1>
+            <p>Uncover the truth behind AI-generated misinformation.</p>
+        </header>
+        
+        <main>
+            <section id="scene">
+                <div id="narrative">Click 'Start' to begin your investigation.</div>
+                <button id="startBtn">Start</button>
+            </section>
+            
+            <section id="questionArea" class="hidden">
+                <div id="question"></div>
+                <div id="options"></div>
+                <button id="nextBtn" class="hidden">Next</button>
+            </section>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

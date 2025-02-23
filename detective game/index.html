@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=960, height=540, initial-scale=1.0">
+    <title>AI Detective: The Case of the Missing Truth</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href='https://fonts.googleapis.com/css?family=Special Elite' rel='stylesheet'>
+</head>
+
+<style> 
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #222;
+        margin: 0;
+    }
+    .container {
+        width: 960px;
+        height: 540px;
+        background-color: rgba(51, 51, 51, 0.9); /* Slight transparency */
+        color: rgb(0, 0, 0);
+        background-image: url('detective-bg.png'); /* Add a detective-themed background */
+        background-size: cover;
+        background-position: center;
+        text-align: center;
+        position: relative;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Special Elite'; font-size: 14px; 
+    }
+    .hidden {
+        display: none;
+    }
+    .decorative {
+        position: absolute;
+        width: 100px;
+        opacity: 0.6;
+    }
+    .case-file {
+        top: 35px;
+        left: -10px;
+        width: 200px;
+        height: 100px;
+        transform: rotate(-15deg);
+    }
+    .stopwatch {
+        bottom: 30px;
+        right: 80px;
+        width: 300px;
+        height: 170px;
+        transform: rotate(10deg);
+    }
+    .hand {
+        top: -5px;
+        right: -1px;
+        width: 300px;
+        height: 120px;
+        transform: rotate(2deg);
+    }
+    .walkie-talkie {
+        top: 210px;
+        right: -130px;
+        width: 450px;
+        height: 130px;
+        transform: rotate(10deg);
+    }
+    .thumbprint {
+        bottom: -15px;
+        left: 300px;
+        width: 300px;;
+        height: 117px;
+        transform: rotate(5deg);
+    }
+        /* Typewriter effect for second and third lines */
+        .typewriter, .typewriter-delay {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #000000;
+            display: inline-block;
+            text-align: center;
+        }
+        .typewriter {
+            width: 0;
+            animation: typing 3s steps(40, end) forwards, blink 0.75s step-end infinite;
+        }
+        .typewriter-delay {
+            width: 0;
+            animation: typing 3s steps(40, end) 3s forwards, blink 0.75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink {
+            from { border-color: #000000; }
+            to { border-color: transparent; }
+        }
+        /* Custom button styling */
+        button {
+            background-color: #50190e;
+            color: #ffffff;
+            font-size: 18px;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Special Elite', cursive;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #962b27;
+        }
+   
+</style>
+<script>
+    window.onload = function() {
+            let music = document.getElementById("background-music-1");
+
+            // Attempt to autoplay immediately (Chrome may block it)
+            let playPromise = music.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log("Music started automatically.");
+                }).catch(() => {
+                    console.log("Autoplay blocked, requiring user interaction.");
+                    
+                    // If autoplay is blocked, wait for user interaction
+                    document.body.addEventListener('click', function playMusic() {
+                        music.play().catch(error => {
+                            console.log("Still blocked, manual interaction needed.");
+                        });
+                        document.body.removeEventListener('click', playMusic); 
+                    });
+                });
+            }
+        };
+</script>
+<body>
+    <div class="container">
+        <img src="stopwatch.png" class="decorative stopwatch" alt="Stopwatch">
+        <img src="case-file.png" class="decorative case-file" alt="Case File">
+        <img src="hand.png" class="decorative hand" alt="Hand">
+        <img src="walkie talkie.png" class="decorative walkie-talkie" alt="Walkie Talkie">
+        <img src="thumbprint.png" class="decorative thumbprint" alt="Thumbprint">
+
+        <audio id="background-music-1" loop>
+            <source src="background-music-1.mp3" type="audio/mp3">
+        </audio>
+
+        <header>
+            <h1>AI Detective: The Case of the Missing Truth</h1>
+            <p class="typewriter">Uncover the truth behind AI-generated misinformation.</p>
+            <p class="typewriter-delay">Click 'Start' to begin your investigation.</p>
+        </header>
+        
+        <main>
+            <section id="scene">
+                <button id="startBtn" onclick="location.href='casefile.html'">Start</button>
+            </section>
+            
+            <section id="questionArea" class="hidden">
+                <div id="question"></div>
+                <div id="options"></div>
+                <button id="nextBtn" class="hidden">Next</button>
+            </section>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

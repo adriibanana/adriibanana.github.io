@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=960, height=540, initial-scale=1.0">
+    <title>AI Detective: Case Log</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Special Elite', cursive;
+        }
+        .container {
+            width: 960px;
+            height: 540px;
+            border: 5px solid #fff;
+            background-color: rgba(51, 51, 51, 0.9);
+            background-image: url('case-log-background.png');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .case-log {
+            width: 80%;
+            height: 60%;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 15px;
+            border: 3px solid #FFD700;
+            overflow-y: auto;
+        }
+        .input-area {
+            width: 80%;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .input-box {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #FFD700;
+            font-size: 16px;
+            background: #333;
+            color: #fff;
+            outline: none;
+        }
+        .submit-btn {
+            background-color: #FFD700;
+            color: #222;
+            border: none;
+            padding: 10px 20px;
+            margin-left: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .submit-btn:hover {
+            background-color: #C9A000;
+        }
+        .feedback {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #FFD700;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="case-log" id="caseLog">
+            <p>🔍 Clues Collected:</p>
+            <ul>
+                <li>A suspicious letter with unknown symbols</li>
+                <li>A broken mirror reflecting something unusual</li>
+                <li>A TV displaying static with hidden messages</li>
+            </ul>
+            <p>📝 Type your deduction below:</p>
+        </div>
+        <div class="input-area">
+            <input type="text" id="userInput" class="input-box" placeholder="Enter your deduction...">
+            <button class="submit-btn" onclick="checkAnswer()">Submit</button>
+        </div>
+        <div id="feedback" class="feedback"></div>
+    </div>
+    <script>
+        function checkAnswer() {
+            let input = document.getElementById("userInput").value.toLowerCase();
+            let feedback = document.getElementById("feedback");
+            
+            if (input.includes("ai")) {
+                feedback.innerHTML = "✔️ Correct! This clue relates to AI manipulation.";
+                feedback.style.color = "#00FF00";
+            } else {
+                feedback.innerHTML = "❌ Incorrect! Re-examine the clues carefully.";
+                feedback.style.color = "#FF0000";
+            }
+            feedback.style.display = "block";
+        }
+    </script>
+</body>
+</html>

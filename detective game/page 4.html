@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=960, height=540, initial-scale=1.0">
+    <title>AI Detective: Case Transition</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222;
+            margin: 0;
+        }
+        .container {
+            width: 960px;
+            height: 540px;
+            background-color: rgba(51, 51, 51, 0.9);
+            background-image: url('page 4 bg.png');
+            background-size: cover;
+            background-position: center;
+            color: #ffffff;
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Special Elite', cursive;
+            overflow: hidden;
+        }
+        .detective {
+            position: absolute;
+            bottom: 0px;
+            width: 900px;
+            height: 500px;
+        }
+        .text-box {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 120px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            padding: 10px;
+        }
+        .typewriter-text {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #ffffff;
+            display: inline-block;
+            animation: typing 3s steps(20, end) forwards, blink 0.45s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink {
+            from { border-color: #ffffff; }
+            to { border-color: transparent; }
+        }
+        h1 {
+            font-size: 50px;
+            position: absolute;
+            top: 3px;
+        }
+        .narrative {
+            font-size: 20px;
+            margin: 20px 0;
+        }
+        /* Adjust Magnifying Glass Position */
+        .magnifying-glass {
+            position: absolute;
+            top: 7px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            transform: rotate(-15deg);
+            z-index: 3;
+        }
+        /* Adjust Files Position */
+        .files {
+            position: absolute;
+            bottom: 130px;
+            right: -25px;
+            width: 350px;
+            height: 250px;
+            transform: rotate(10deg);
+            z-index: 3;
+        }
+    </style>
+    <script>
+        function proceedToQuestion() {
+            setTimeout(function() {
+                window.location.href = 'question1.html';
+            }, 1000);
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            const text = "You've gathered enough information. It's time to put your detective skills to the test.";
+            let index = 0;
+            function typeWriter() {
+                if (index < text.length) {
+                    document.getElementById("typewriter").innerHTML += text.charAt(index);
+                    index++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+            typeWriter();
+            setTimeout(function() {
+                window.location.href = 'interrogation room.html';
+             }, 8000); 
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <img src="magnifying-glass.png" class="magnifying-glass" alt="Magnifying Glass">
+        <img src="files.png" class="files" alt="Files">
+        <h1>🔍 The Case Begins</h1>
+        <img src="detective.png" alt="Detective" class="detective">
+        <div class="text-box"><span id="typewriter" class="typewriter-text"></span></div>
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=960, height=540, initial-scale=1.0">
+    <title>AI Detective: Investigate the Objects</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container {
+            width: 960px;
+            height: 540px;
+            background-color: rgba(51, 51, 51, 0.9);
+            background-image: url('location1.png');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .text-box,.transition-text-box {
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 60px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 15px;
+            font-family: 'Special Elite', cursive;
+            text-align: center;
+            padding: 10px;
+            z-index: 7;
+            border-radius: 5px;
+        }
+        .typewriter-text {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid #ffffff;
+            display: inline-block;
+            animation: typing 2s steps(40, end) forwards, blink 0.75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink {
+            from { border-color: #ffffff; }
+            to { border-color: transparent; }
+        }
+        .transition-text-box {
+            display: none;
+        }
+        .object {
+            position: absolute;
+            cursor: pointer;
+            transition: transform 0.3s ease; 
+        }
+        .object:hover {
+            transform: scale(1.1);
+        }
+        #letter:hover {
+            transform: scale(1.1)
+        }
+        #tv { position:absolute; top: 170px; left: 440px; width: 300px; z-index: 5;}
+        #mirror { position:absolute; top: 125px; left: 140px; width: 210px; }
+        #letter { position:absolute; top: 410px; left: 200px; width: 70px; transform: rotate(-10deg); pointer-events: auto;}
+        
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #ffffff;
+            padding: 15px;
+            border: 5px solid #fff;
+            text-align: center;
+            display: none;
+            font-family: 'Special Elite', cursive;
+            z-index: 10;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .options button {
+            background-color: #50190e;
+            color: #ffffff;
+            font-size: 18px;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Special Elite', cursive;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin: 10px;
+            display: block;
+            width: 80%;
+            text-align: left;
+        }
+        .options button:hover {
+            background-color: #962b27;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            display: none;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background-color: #50190e;
+            color: #ffffff;
+            border: none;
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .close-btn:hover {
+            background-color: #962b27;
+        }
+        .fade-out {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease-in-out;
+            z-index: 20;
+        }
+        .fade-out.active {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+    <script>
+    let correctAnswers = parseInt(localStorage.getItem("correctAnswers")) || 0;
+    let totalQuestions = 3;
+    let answeredQuestions = new Set();
+
+    function showPopup(questionId) {
+        document.getElementById(questionId).style.display = 'block';
+    }
+
+    function closePopup(questionId) {
+        document.getElementById(questionId).style.display = 'none';
+    }
+
+    function checkAnswer(questionId, isCorrect) {
+        let result = document.querySelector(`#${questionId} .result`);
+        if (isCorrect && !answeredQuestions.has(questionId)) {
+            result.innerHTML = "✅ Correct!";
+            result.style.color = "#00FF00";
+            
+            // Ensure correctAnswers updates across pages
+            correctAnswers = parseInt(localStorage.getItem("correctAnswers")) || 0;
+            correctAnswers++;
+            localStorage.setItem("correctAnswers", correctAnswers);
+
+            console.log("Updated correct answers:", correctAnswers); // Debugging
+        } else if (!answeredQuestions.has(questionId)) {
+            result.innerHTML = "❌ Incorrect!";
+            result.style.color = "#962b27";
+        }
+
+        result.style.display = "block";
+        answeredQuestions.add(questionId);
+
+        setTimeout(() => {
+            closePopup(questionId);
+            checkCompletion();
+        }, 2000);
+    }
+
+    function checkCompletion() {
+        if (answeredQuestions.size >= totalQuestions) {
+            document.querySelector('.transition-text-box').style.display = 'flex';
+
+            setTimeout(() => {
+                document.getElementById('fade').classList.add('active');
+                setTimeout(() => {
+                    window.location.href = 'location 2.html';
+                }, 1000);
+            }, 4000);
+        }
+    }
+        
+        window.onload = function() {
+            let music = document.getElementById("background-music-1");
+
+            // Attempt to autoplay immediately (Chrome may block it)
+            let playPromise = music.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log("Music started automatically.");
+                }).catch(() => {
+                    console.log("Autoplay blocked, requiring user interaction.");
+                    
+                    // If autoplay is blocked, wait for user interaction
+                    document.body.addEventListener('click', function playMusic() {
+                        music.play().catch(error => {
+                            console.log("Still blocked, manual interaction needed.");
+                        });
+                        document.body.removeEventListener('click', playMusic); 
+                    });
+                });
+            }
+        };
+        setTimeout(() => {
+            document.querySelector('.text-box').style.display = 'none';
+        }, 5000);
+    
+    </script>
+</head>
+<body>
+    <div class="container">
+        <img src="tv.png" id="tv" class="object" onclick="showPopup('popup1')">
+        <img src="mirror.png" id="mirror" class="object" onclick="showPopup('popup2')">
+        <img src="letter.png" id="letter" class="object" onclick="showPopup('popup3')">
+
+        <div class="text-box"><span class="typewriter-text">Find the hidden clues to answer the questions...</span></div>
+        <div class="transition-text-box">
+            <span class="typewriter-text">Good try. Let's move on to the next location to find more clues...</span>
+        </div>
+        
+
+        <audio id="background-music-1" loop>
+            <source src="background-music-1.mp3" type="audio/mp3">
+        </audio>
+    </div>
+
+    <div id="popup1" class="popup">
+        <button class="close-btn" onclick="closePopup('popup1')">X</button>
+        <p>📝 Question: What is Generative AI?</p>
+        <div class="options">
+            <button onclick="checkAnswer('popup1', true)">A. AI that can create new content like text, images, and music </button>
+            <button onclick="checkAnswer('popup1', false)">B. AI that only follows human commands</button>
+            <button onclick="checkAnswer('popup1', false)">C. AI that copies information exactly</button>
+        </div>
+        <div class="result"></div>
+    </div>
+
+    <div id="popup2" class="popup">
+        <button class="close-btn" onclick="closePopup('popup2')">X</button>
+        <p>📝 Question: How does AI learn?</p>
+        <div class="options">
+            <button onclick="checkAnswer('popup2', false)">A. By randomly guessing until it gets the right answer </button>
+            <button onclick="checkAnswer('popup2', true)">B. By learning from data patterns and improving over time </button>
+            <button onclick="checkAnswer('popup2', false)">C. AI learns on its own without any data</button>
+        </div>
+        <div class="result"></div>
+    </div>
+
+    <div id="popup3" class="popup">
+        <button class="close-btn" onclick="closePopup('popup3')">X</button>
+        <p>📝 Question: What is a deepfake?</p>
+        <div class="options">
+            <button onclick="checkAnswer('popup3', true)">A. A video or image manipulated using AI to create false visuals </button>
+            <button onclick="checkAnswer('popup3', false)">B. A random computer-generated image</button>
+            <button onclick="checkAnswer('popup3', false)">C. A deep learning algorithm</button>
+        </div>
+        <div class="result"></div>
+    </div>
+    <div id="fade" class="fade-out"></div>
+</body>
+</html>

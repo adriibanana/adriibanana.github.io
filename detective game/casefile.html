@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=960, height=540, initial-scale=1.0">
+    <title>Case File: AI and Its Impact</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222;
+            margin: 0;
+        }
+        .container {
+            width: 960px;
+            height: 540px;
+            background-color: rgba(255, 255, 255, 0.9); /* Slight transparency */
+            background-image: url('page 2 bg.png'); /* Add a detective-themed background */
+            background-size: cover;
+            background-position: center;
+            color: #50190e;
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Special Elite', cursive;
+            overflow-y: auto;
+            transition: transform 1s ease-in-out;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        p {
+            font-size: 12px;
+            margin: 10px 0;
+        }
+        button {
+            background-color: #50190e;
+            color: #ffffff;
+            font-size: 18px;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Special Elite', cursive;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px; /* Moves the button further down */
+        }
+        button:hover {
+            background-color: #962b27;
+        }
+        /* Page flip transition */
+        .flip-page {
+            transform-origin: right;
+            animation: flipPage 1s ease-in-out forwards;
+        }
+        @keyframes flipPage {
+            0% {
+                transform: rotateY(0deg);
+            }
+            100% {
+                transform: rotateY(-180deg);
+                opacity: 0;
+            }
+        }
+    </style>
+    <script>
+        function flipPage() {
+            document.querySelector('.container').classList.add('flip-page');
+            setTimeout(function() {
+                window.location.href = 'page 3.html';
+            }, 1000);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Case File: AI and Its Impact</h1>
+        <p>Artificial Intelligence (AI) is revolutionizing industries, from healthcare to finance.</p>
+        <p>However, AI also introduces challenges such as misinformation, bias, and ethical concerns.</p>
+        <p>As a detective, it's your job to determine if AI is being used ethically and uncover hidden truths.</p>
+            <button onclick="flipPage()">Next</button>
+    </div>
+</body>
+</html>
